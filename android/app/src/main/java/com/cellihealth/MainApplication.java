@@ -2,6 +2,7 @@ package com.cellihealth;
 
 import android.app.Application;
 
+import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
 import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
 import com.brentvatne.react.ReactVideoPackage;
@@ -35,24 +36,26 @@ public class MainApplication extends Application implements ReactApplication {
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
+    CallbackManager mCallbackManager;
 
     @Override
     protected List<ReactPackage> getPackages() {
+      mCallbackManager = new CallbackManager.Factory().create();
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new ReactNativeYouTube(),
             new ReactVideoPackage(),
             new SvgPackage(),
-            new SamsungHealthPackage(),
+            new SamsungHealthPackage(BuildConfig.APPLICATION_ID),
             new PushwooshPackage(),
             new MapsPackage(),
             new ReactNativeLocalizationPackage(),
             new IntercomPackage(),
             new ImagePickerPackage(),
             new ReactNativeI18n(),
-            new GoogleFitPackage(),
+            new GoogleFitPackage(BuildConfig.APPLICATION_ID),
             new FIRAnalyticsPackage(),
-            new FBSDKPackage(),
+            new FBSDKPackage(mCallbackManager),
             new FabricPackage(),
             new RNDeviceInfo(),
             new RCTCameraPackage(),
